@@ -1,0 +1,10 @@
+data
+logs
+__pycache__
+.idea
+.ipynb_checkpoints
+.*venv
+*.csv
+*.pkl
+*.json
+.env
