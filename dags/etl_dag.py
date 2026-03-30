@@ -7,9 +7,6 @@ import clickhouse_connect
 import tempfile
 import glob
 import time
-#import subprocess
-import shutil
-#import warnings
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -19,15 +16,12 @@ from airflow_clickhouse_plugin.operators.clickhouse import ClickHouseOperator
 from airflow_clickhouse_plugin.hooks.clickhouse import ClickHouseHook
 
 from datetime import datetime, date
-
 from dotenv import load_dotenv
 from pymongo import MongoClient
 
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
 
-#from urllib3.exceptions import InsecureRequestWarning
-from pathlib import Path
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
@@ -818,14 +812,13 @@ def check_db_exists():
 def init_db():
     hook = ClickHouseHook(clickhouse_conn_id='clickhouse_connection')
 
-    with open('dags/mart_clickhouse.sql', 'r') as f:
+    with open('dags/mart_clickhouse.sql', 'r', encoding='utf-8') as f:
         sql_commands = f.read().split(';')
         
     for command in sql_commands:
         clean_command = command.strip()
         if clean_command: 
             hook.execute(clean_command)
-
     
 def setup_clickhouse():
     hook = ClickHouseHook(clickhouse_conn_id='clickhouse_connection')
@@ -833,6 +826,7 @@ def setup_clickhouse():
     # Создание баз данных
     hook.execute("CREATE DATABASE IF NOT EXISTS mart_raw")
     hook.execute("CREATE DATABASE IF NOT EXISTS mart")
+
 
 #======DAG=======
 with DAG(
