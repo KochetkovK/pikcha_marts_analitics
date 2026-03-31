@@ -417,8 +417,6 @@ def run_spark_job(**context):
 
     jdbc_url = f"jdbc:clickhouse://{ch_ip.strip()}:8123/mart"
 
-    #current_data = date.today().strftime('%Y_%m_%d')
-    #file_name =  f"analytic_result_{current_data}"
     out_dir = tempfile.mkdtemp(prefix="analytic_result")
     logging.info(f"OUT_DIR: {out_dir}")
     
@@ -766,7 +764,7 @@ def ensure_bucket(s3):
         s3.create_bucket(Bucket=S3_BUCKET)
 
 def load_to_s3(**context):
-    # Загружаем parquet-файл в S3
+    # Загружаем csv-файл в S3
     ti = context["ti"]
     out_dir = ti.xcom_pull(task_ids="run_pyspark_task")
     logging.info(out_dir)
