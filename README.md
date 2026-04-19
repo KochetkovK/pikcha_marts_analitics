@@ -79,7 +79,7 @@ source .venv/bin/activate
 ```python3 modules/insert_into_mongo.py```
 
 #### Ручной запуск проекта
-* Подключится к ClickHause
+* Подключится к ClickHouse
 * Запустить sql-файл [mart_clickhouse.sql](mart_clickhouse.sql)
 * Запустить файл [modules/producer.py](modules/producer.py)
 
